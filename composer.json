@@ -19,6 +19,14 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/skcheung/laravel-framework"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/skcheung/framework"
     }
   ],
   "autoload": {
