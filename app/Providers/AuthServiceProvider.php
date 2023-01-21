@@ -7,14 +7,23 @@ use Themosis\Core\Support\Providers\AuthServiceProvider as ServiceProvider;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * @var array
+     * The model to policy mappings for the application.
+     *
+     * @var array<class-string, class-string>
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy'
+        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
+    /**
+     * Register any authentication / authorization services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->registerPolicies();
+
+        //
     }
 }

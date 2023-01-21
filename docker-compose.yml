@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  php:
+    image: webdevops/php-apache-dev:8.2
+    working_dir: /app
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/htdocs
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_MAX_EXECUTION_TIME=60
+      - COMPOSER_VERSION=1
+      - XDEBUG_MODE=debug
+      - XDEBUG_START_WITH_REQUEST=yes
+      - XDEBUG_CLIENT_PORT=9000
+      - XDEBUG_CLIENT_HOST=host.docker.internal
+      - XDEBUG_DISCOVER_CLIENT_HOST=true
+      - XDEBUG_MAX_NESTING_LEVEL=1000
+      - XDEBUG_IDE_KEY=PHPSTORM
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/app:rw
+  database:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=themosis
+      - MYSQL_USER=themosis
+      - MYSQL_PASSWORD=secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+      - UPLOAD_LIMIT=1G
+  memcached:
+    image: memcached
+    ports:
+      - "11211:11211"
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  db-data:

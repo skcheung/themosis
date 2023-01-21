@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Default Session Driver
@@ -13,9 +14,10 @@ return [
     | you may specify any of the other wonderful drivers provided here.
     |
     | Supported: "file", "cookie", "database", "apc",
-    |            "memcached", "redis", "array"
+    |            "memcached", "redis", "dynamodb", "array"
     |
     */
+
     'driver' => env('SESSION_DRIVER', 'file'),
 
     /*
@@ -66,7 +68,9 @@ return [
     | correspond to a connection in your database configuration options.
     |
     */
-    'connection' => null,
+
+    'connection' => env('SESSION_CONNECTION'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -78,6 +82,7 @@ return [
     | provided for you; however, you are free to change this as needed.
     |
     */
+
     'table' => 'sessions',
 
     /*
@@ -85,12 +90,15 @@ return [
     | Session Cache Store
     |--------------------------------------------------------------------------
     |
-    | When using the "apc" or "memcached" session drivers, you may specify a
-    | cache store that should be used for these sessions. This value must
-    | correspond with one of the application's configured cache stores.
+    | While using one of the framework's cache driven session backends you may
+    | list a cache store that should be used for these sessions. This value
+    | must match with one of the application's configured cache "stores".
+    |
+    | Affects: "apc", "dynamodb", "memcached", "redis"
     |
     */
-    'store' => null,
+
+    'store' => env('SESSION_STORE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,6 +110,7 @@ return [
     | happen on a given request. By default, the odds are 2 out of 100.
     |
     */
+
     'lottery' => [2, 100],
 
     /*
@@ -114,9 +123,10 @@ return [
     | new session cookie is created by the framework for every driver.
     |
     */
+
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'themosis'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),
 
     /*
@@ -129,6 +139,7 @@ return [
     | your application but you are free to change this when necessary.
     |
     */
+
     'path' => '/',
 
     /*
@@ -141,7 +152,8 @@ return [
     | available to in your application. A sensible default has been set.
     |
     */
-    'domain' => env('SESSION_DOMAIN', null),
+
+    'domain' => env('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -150,10 +162,11 @@ return [
     |
     | By setting this option to true, session cookies will only be sent back
     | to the server if the browser has a HTTPS connection. This will keep
-    | the cookie from being sent to you if it can not be done securely.
+    | the cookie from being sent to you when it can't be done securely.
     |
     */
-    'secure' => env('SESSION_SECURE_COOKIE', false),
+
+    'secure' => env('SESSION_SECURE_COOKIE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -165,6 +178,7 @@ return [
     | the HTTP protocol. You are free to modify this option if needed.
     |
     */
+
     'http_only' => true,
 
     /*
@@ -174,11 +188,13 @@ return [
     |
     | This option determines how your cookies behave when cross-site requests
     | take place, and can be used to mitigate CSRF attacks. By default, we
-    | do not enable this as other CSRF protection services are in place.
+    | will set this value to "lax" since this is a secure default value.
     |
-    | Supported: "lax", "strict"
+    | Supported: "lax", "strict", "none", null
     |
     */
+
     'same_site' => 'lax',
+
 
 ];

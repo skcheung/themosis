@@ -28,7 +28,11 @@ return [
     | your application ready for upcoming major versions of dependencies.
     |
     */
-    'deprecations' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
+
+    'deprecations' => [
+        'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
+        'trace' => false,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -36,36 +40,39 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may configure the log channels for your application. Out of
-    | the box, Themosis uses the illuminate/log package which comes with the
-    | Monolog PHP logging library. This gives you a variety of powerful
-    | log handlers / formatters to utilize.
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
     |
     | Available Drivers: "single", "daily", "slack", "syslog",
-    |                    "errorlog", "custom", "stack"
+    |                    "errorlog", "monolog",
+    |                    "custom", "stack"
     |
     */
+
     'channels' => [
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
+            'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/themosis.log'),
-            'level' => 'debug',
+            'level' => env('LOG_LEVEL', 'debug'),
         ],
 
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/themosis.log'),
-            'level' => 'debug',
-            'days' => 7,
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
         ],
 
         'deprecations' => [
             'driver' => 'single',
             'path' => storage_path('logs/themosis-deprecations.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
         ],
 
         'slack' => [
@@ -73,16 +80,17 @@ return [
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
             'username' => 'Themosis Log',
             'emoji' => ':boom:',
-            'level' => 'critical',
+            'level' => env('LOG_LEVEL', 'critical'),
         ],
 
         'papertrail' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
-            'handler' => SyslogUdpHandler::class,
+            'handler' => env('LOG_PAPERTRAIL_HANDLER', SyslogUdpHandler::class),
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
             ],
         ],
 
@@ -115,4 +123,6 @@ return [
             'path' => storage_path('logs/themosis.log'),
         ],
     ],
+
+
 ];

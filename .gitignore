@@ -15,7 +15,9 @@ Vagrantfile
 /vendor/
 
 ### IDE
+/.fleet
 /.idea
+/.vscode
 
 ### PHPCS
 cs_fixer*
@@ -31,3 +33,8 @@ node_modules/
 
 ### Environment Credentials
 .env
+
+/htdocs/build
+/htdocs/hot
+/htdocs/content/storage
+/storage/*.key

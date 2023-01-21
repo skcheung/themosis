@@ -15,11 +15,11 @@ class Mail extends Hookable
     {
         Action::add('phpmailer_init', function ($phpmailer) {
             $phpmailer->isSMTP();
-            $phpmailer->Host = config('mail.host');
+            $phpmailer->Host = config('mail.mailers.smtp.host');
             $phpmailer->SMTPAuth = true;
-            $phpmailer->Port = config('mail.port');
-            $phpmailer->Username = config('mail.username');
-            $phpmailer->Password = config('mail.password');
+            $phpmailer->Port = config('mail.mailers.smtp.port');
+            $phpmailer->Username = config('mail.mailers.smtp.username');
+            $phpmailer->Password = config('mail.mailers.smtp.password');
             $phpmailer->SMTPSecure = false;
         });
 
