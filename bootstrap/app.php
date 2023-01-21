@@ -22,4 +22,9 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    Themosis\Core\PackageManifest::class,
+    Illuminate\Foundation\PackageManifest::class
+);
+
 return $app;
