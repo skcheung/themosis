@@ -21,12 +21,12 @@
       "url": "https://wpackagist.org"
     },
     {
-      "type": "github",
-      "url": "https://github.com/skcheung/laravel-framework"
+      "type": "git",
+      "url": "https://github.com/skcheung/laravel-framework.git"
     },
     {
-      "type": "github",
-      "url": "https://github.com/skcheung/framework"
+      "type": "git",
+      "url": "https://github.com/skcheung/framework.git"
     }
   ],
   "autoload": {
