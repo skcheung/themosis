@@ -7,7 +7,7 @@ services:
       - WEB_DOCUMENT_ROOT=/app/htdocs
       - PHP_MEMORY_LIMIT=512M
       - PHP_MAX_EXECUTION_TIME=60
-      - COMPOSER_VERSION=1
+      - COMPOSER_VERSION=2
       - XDEBUG_MODE=off
       - XDEBUG_START_WITH_REQUEST=yes
       - XDEBUG_CLIENT_PORT=9000
@@ -50,6 +50,10 @@ services:
     image: docker.dragonflydb.io/dragonflydb/dragonfly
     ports:
       - "6379:6379"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
   mailhog:
     image: mailhog/mailhog
     ports:
