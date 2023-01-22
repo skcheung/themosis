@@ -46,8 +46,8 @@ services:
     image: memcached
     ports:
       - "11211:11211"
-  redis:
-    image: redis:latest
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly
     ports:
       - "6379:6379"
   mailhog:
